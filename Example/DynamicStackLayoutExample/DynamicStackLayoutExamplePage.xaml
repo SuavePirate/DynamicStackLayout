@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:local="clr-namespace:DynamicStackLayoutExample" 
+    xmlns:suave="clr-namespace:SuaveControls.DynamicStackLayout;assembly=SuaveControls.DynamicStackLayout"
+    x:Class="DynamicStackLayoutExample.DynamicStackLayoutExamplePage">
+    <StackLayout Orientation="Vertical">
+        <Label Margin="30" HorizontalOptions="Center" Text="Horizontally bound scrolling stack layout" />
+        <ScrollView Orientation="Horizontal" HeightRequest="150" BackgroundColor="Red">
+            <suave:DynamicStackLayout ItemsSource="{Binding Items}" Orientation="Horizontal">
+                <suave:DynamicStackLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Frame HeightRequest="100" WidthRequest="100" BackgroundColor="Gray" Margin="16">
+                            <Label VerticalOptions="Center" HorizontalOptions="Center" Text="{Binding .}"/>
+                        </Frame>
+                    </DataTemplate>
+                </suave:DynamicStackLayout.ItemTemplate>
+            </suave:DynamicStackLayout>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>
