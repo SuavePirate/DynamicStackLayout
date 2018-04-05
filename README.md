@@ -61,6 +61,9 @@ Don't like data-binding and want to just use child views? You can do that too!
     </suave:DynamicStackLayout>
 </ScrollView>
 ```
+
+Check out this blog post for more details! https://alexdunn.org/2017/12/12/xamarin-nuget-xamarin-forms-dynamic-bindable-stacklayout/
+
 ## Features
 
 - Bindable child views
@@ -70,7 +73,9 @@ Don't like data-binding and want to just use child views? You can do that too!
 
 ## What does this thing look like?
 
-// TODO
+![horizontal scrolling stacklayout](https://alexdunndev.files.wordpress.com/2017/12/screen-shot-2017-12-12-at-1-16-43-pm.png?w=327&h=576)
+![horizontal scrolling stacklayout](https://alexdunndev.files.wordpress.com/2017/12/screen-shot-2017-12-12-at-1-16-54-pm.png?w=325&h=576)
+![horizontal scrolling stacklayout](https://alexdunndev.files.wordpress.com/2017/12/screen-shot-2017-12-12-at-1-17-08-pm.png?w=656&h=369)
 
 ## Notes
 This does not use any native view virtualization, which means performance does not scale well with extremely large data sets.
