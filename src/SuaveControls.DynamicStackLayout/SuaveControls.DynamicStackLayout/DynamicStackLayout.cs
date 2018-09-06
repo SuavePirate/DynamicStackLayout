@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace SuaveControls.DynamicStackLayout
@@ -57,6 +58,24 @@ namespace SuaveControls.DynamicStackLayout
             set { SetValue(ItemTemplateProperty, value); }
         }
 
+        public event EventHandler<ItemTappedEventArgs> ItemSelected;
+
+        public static readonly BindableProperty SelectedCommandProperty = BindableProperty.Create("SelectedCommand", typeof(ICommand), typeof(DynamicStackLayout), null);
+
+        public ICommand SelectedCommand
+        {
+            get { return (ICommand)GetValue(SelectedCommandProperty); }
+            set { SetValue(SelectedCommandProperty, value); }
+        }
+
+        public static readonly BindableProperty SelectedCommandParameterProperty = BindableProperty.Create("SelectedCommandParameter", typeof(object), typeof(DynamicStackLayout), null);
+
+        public object SelectedCommandParameter
+        {
+            get { return GetValue(SelectedCommandParameterProperty); }
+            set { SetValue(SelectedCommandParameterProperty, value); }
+        }
+
 
         #endregion
 
@@ -68,7 +87,7 @@ namespace SuaveControls.DynamicStackLayout
         {
             Children.Clear();
             // Check for data
-            if (ItemsSource == null || ItemsSource.Count() == 0 || ItemsSource.First() == null)
+            if (ItemTemplate == null || ItemsSource == null || ItemsSource.Count() == 0 || ItemsSource.First() == null)
             {
                 return;
             }
@@ -95,13 +114,25 @@ namespace SuaveControls.DynamicStackLayout
         /// <param name="item">Item.</param>
         private View CreateCellView(object item)
         {
+            var command = SelectedCommand ?? new Command((obj) =>
+            {
+                var args = new ItemTappedEventArgs(ItemsSource, item);
+                ItemSelected?.Invoke(this, args);
+            });
+            var commandParameter = SelectedCommandParameter ?? item;
+
             var view = (View)ItemTemplate.CreateContent();
             var bindableObject = (BindableObject)view;
-
             if (bindableObject != null)
             {
                 bindableObject.BindingContext = item;
             }
+            view.GestureRecognizers.Add(new TapGestureRecognizer
+            {
+                Command = command,
+                CommandParameter = commandParameter,
+                NumberOfTapsRequired = 1
+            });
 
             return view;
         }
